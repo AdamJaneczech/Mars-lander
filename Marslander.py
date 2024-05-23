@@ -20,7 +20,7 @@ v = 262 #m/s
 v_x = v * math.cos(gamma)
 v_y = v * math.sin(gamma)
 m_zfw = 699 #kg
-m_prop = 75 #kg
+m_prop = 72.05 #kg
 m = m_zfw + m_prop
 m_dot = 0 #kg/s
 t = 0
@@ -35,7 +35,7 @@ while (float(h) >= 0.3):
     F_xd = 0.5 * 4.92 * pow(float(v_x), 2) * atmData[RHO] * (-1)
     F_yd = 0.5 * 4.92 * pow(float(v_y), 2) * atmData[RHO]
     #thrust component
-    if(h < 2000 and h > 0.3 and m_prop >= 1e-3):
+    if(h <= 2000 and h >= 0.3 and m_prop >= 1e-3):
         m_dot = ((m * abs(g_0))/v_e) + k_v * (v_y_ref - v_y)
         if(m_dot > 5):
             m_dot = 5
@@ -62,8 +62,10 @@ while (float(h) >= 0.3):
     
     h += v_y * dt
     x += v_x * dt
-    
+
 h_dat, x_dat, v_dat, m_dot_dat, gamma_dat = zip(*dat)  
+
+print('Touchdown speed: ' + str(v))
 
 plt.subplot(231)
 plt.plot(x_dat, h_dat)
